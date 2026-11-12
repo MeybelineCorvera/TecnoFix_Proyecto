@@ -18,6 +18,7 @@ namespace TecnoFix.Clases
             dgv.Columns["Diagnostico"].HeaderText = "Diagnostico";
             dgv.Columns["Estado"].HeaderText = "Estado";
             dgv.Columns["Tecnico"].HeaderText = "Tecnico";
+            dgv.Columns["RegistradoPor"].HeaderText = "Registrado por";
             dgv.Columns["FechaIngreso"].HeaderText = "Ingreso";
             dgv.Columns["FechaEntrega"].HeaderText = "Entrega";
 

@@ -24,6 +24,7 @@ namespace TecnoFix.Repositorios
             List<Cliente> clientes = new ClienteRepositorio().ObtenerTodos();
             List<Estado> estados = new EstadoRepositorio().ObtenerTodos();
             List<Tecnico> tecnicos = new TecnicoRepositorio().ObtenerTodos();
+            List<Usuario> usuarios = new UsuarioRepositorio().ObtenerTodos();
 
             return (from o in ordenes
                     join e in equipos on o.IdEquipo equals e.Id
@@ -31,6 +32,8 @@ namespace TecnoFix.Repositorios
                     join s in estados on o.IdEstado equals s.Id
                     join t in tecnicos on o.IdTecnico equals t.Id into gt
                     from t in gt.DefaultIfEmpty()
+                    join u in usuarios on o.IdUsuario equals u.Id into gu
+                    from u in gu.DefaultIfEmpty()
                     orderby o.Id descending
                     select new OrdenDetalle
                     {
@@ -47,6 +50,7 @@ namespace TecnoFix.Repositorios
                         Diagnostico = o.Diagnostico,
                         Estado = s.Nombre,
                         Tecnico = t == null ? "Sin asignar" : t.Nombre,
+                        RegistradoPor = u == null ? "-" : u.NombreUser,
                         FechaIngreso = o.FechaIngreso,
                         FechaEntrega = o.FechaEntrega
                     }).ToList();

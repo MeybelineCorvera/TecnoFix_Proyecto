@@ -169,6 +169,7 @@ namespace TecnoFix.Formularios
                         IdTecnico = idTecnico == 0 ? (int?)null : idTecnico,
                         IdEstado = idEstado,
                         FechaIngreso = DateTime.Now,   //obligatorioya q sin esto SQL rechaza la fecha 0001
+                        IdUsuario = Sesion.Actual.Id,  // queda registrado quien creo la orden
                         Falla = falla,
                         Diagnostico = diagnostico == "" ? null : diagnostico,
                         FechaEntrega = idEstado == EstadoOrden.Entregado ? DateTime.Now : (DateTime?)null
@@ -242,7 +243,14 @@ namespace TecnoFix.Formularios
             cboEquipo.Enabled = true;
             cboCliente.SelectedIndex = -1;
             cboEquipo.DataSource = null;
-            cboTecnico.SelectedValue = 0;
+            //Si quien inicio sesion es un tecnico con cuenta vinculada, se preselecciona como responsable
+            int idTecnico = 0;
+            if (Sesion.HayUsuario)
+            {
+                Tecnico propio = new TecnicoRepositorio().ObtenerPorUsuario(Sesion.Actual.Id);
+                if (propio != null) idTecnico = propio.Id;
+            }
+            cboTecnico.SelectedValue = idTecnico;
             cboEstado.SelectedValue = EstadoOrden.Recibido;
             txtFalla.Clear();
             txtDiagnostico.Clear();

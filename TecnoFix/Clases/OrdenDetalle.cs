@@ -19,6 +19,7 @@ namespace TecnoFix.Clases
         public string Diagnostico { get; set; }
         public string Estado { get; set; }
         public string Tecnico { get; set; }
+        public string RegistradoPor { get; set; }
         public DateTime FechaIngreso { get; set; }
         public DateTime? FechaEntrega { get; set; }
     }
