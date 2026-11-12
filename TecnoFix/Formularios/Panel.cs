@@ -1,6 +1,7 @@
 using System;
 using System.Windows.Forms;
 using TecnoFix.Clases;
+using TecnoFix.Repositorios;
 
 namespace TecnoFix.Formularios
 {
@@ -14,7 +15,13 @@ namespace TecnoFix.Formularios
         private void Panel_Load(object sender, EventArgs e)
         {
             if (Sesion.HayUsuario)
-                lblUsuario.Text = "Usuario: " + Sesion.Actual.NombreUser + "   |   Rol: " + Sesion.Actual.Rol;
+            {
+                string texto = "Usuario: " + Sesion.Actual.NombreUser + "   |   Rol: " + Sesion.Actual.Rol;
+                //Si el usuario esta ligado a un tecnico, se muestra su nombre
+                Tecnico tecnico = new TecnicoRepositorio().ObtenerPorUsuario(Sesion.Actual.Id);
+                if (tecnico != null) texto += "   |   Tecnico: " + tecnico.Nombre;
+                lblUsuario.Text = texto;
+            }
 
             //El tecnico solo trabaja con clientes, equipos y ordenes
             tecnicosToolStripMenuItem.Enabled = Sesion.EsAdministrador;

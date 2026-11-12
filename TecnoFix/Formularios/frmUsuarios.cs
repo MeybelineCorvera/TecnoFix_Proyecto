@@ -153,10 +153,10 @@ namespace TecnoFix.Formularios
                 repo.Eliminar(seleccionado);
                 LimpiarCampos();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                MessageBox.Show("No se pudo eliminar:\n" + ex.Message, "Error",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("No se puede eliminar: el usuario esta ligado a un tecnico o registro ordenes.",
+                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 

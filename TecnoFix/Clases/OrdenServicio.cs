@@ -13,7 +13,7 @@ namespace TecnoFix.Clases
         public string Falla { get; set; }
         public string Diagnostico { get; set; }
         public DateTime? FechaEntrega { get; set; }
-
+        public int IdUsuario { get; set; }   //usuario que registro la orden
         public OrdenServicio Copiar() { return (OrdenServicio)this.MemberwiseClone(); }
     }
 }

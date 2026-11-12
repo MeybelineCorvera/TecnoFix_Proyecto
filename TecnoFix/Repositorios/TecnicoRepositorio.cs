@@ -13,5 +13,13 @@ namespace TecnoFix.Repositorios
                 return cn.Query<Tecnico>(x => x.Id == id).FirstOrDefault();
             }
         }
+        //Tecnico ligado a una cuenta de usuario (null si ese usuario no es un tecnico)
+        public Tecnico ObtenerPorUsuario(int idUsuario)
+        {
+            using (var cn = ConexionBD.ObtenerConexion())
+            {
+                return cn.Query<Tecnico>(x => x.IdUsuario == idUsuario).FirstOrDefault();
+            }
+        }
     }
 }

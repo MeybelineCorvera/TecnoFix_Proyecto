@@ -6,6 +6,7 @@ namespace TecnoFix.Clases
         public int Id { get; set; }
         public string Nombre { get; set; }
         public string Telefono { get; set; }
+        public int? IdUsuario { get; set; }   //cuenta de acceso (puede ser null)
 
         public Tecnico Copiar() { return (Tecnico)this.MemberwiseClone(); }
     }
