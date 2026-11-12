@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net472</TargetFramework>
+    <UseWindowsForms>true</UseWindowsForms>
+    <RootNamespace>TecnoFix</RootNamespace>
+    <AssemblyName>TecnoFix</AssemblyName>
+    <LangVersion>latest</LangVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Configuration" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- Mismas versiones que el proyecto de ejemplo (Parcial_II_POE_v2) -->
+    <PackageReference Include="RepoDb" Version="1.17.1" />
+    <PackageReference Include="RepoDb.SqlServer" Version="1.17.2" />
+    <PackageReference Include="Microsoft.Data.SqlClient" Version="7.1.1" />
+    <PackageReference Include="System.Security.Cryptography.Pkcs" Version="11.0.0" />
+  </ItemGroup>
+
+</Project>
