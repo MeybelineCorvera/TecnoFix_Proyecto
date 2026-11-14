@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 using TecnoFix.Clases;
@@ -29,6 +30,7 @@ namespace TecnoFix.Formularios
         private void frmTecnicos_Load(object sender, EventArgs e)
         {
             Notificador.DatosCambiaron += CargarGrid;
+            CargarUsuarios();
             CargarGrid();
         }
 
@@ -37,13 +39,46 @@ namespace TecnoFix.Formularios
             Notificador.DatosCambiaron -= CargarGrid;
         }
 
+        // Llena el combo con los usuarios de rol Tecnico que no estan ligados a otro tecnico
+        private void CargarUsuarios()
+        {
+            List<Tecnico> tecnicos = repo.ObtenerTodos().ToList();
+            List<ItemCombo> lista = new List<ItemCombo> { new ItemCombo { Id = 0, Texto = "Sin usuario" } };
+
+            lista.AddRange(new UsuarioRepositorio().ObtenerTodos()
+                .Where(u => u.Rol == "Tecnico" &&
+                            !tecnicos.Any(t => t.IdUsuario == u.Id && (tecnicoActual == null || t.Id != tecnicoActual.Id)))
+                .Select(u => new ItemCombo { Id = u.Id, Texto = u.NombreUser }));
+
+            cboUsuario.DisplayMember = "Texto";
+            cboUsuario.ValueMember = "Id";
+            cboUsuario.DataSource = lista;
+        }
+
         private void CargarGrid()
         {
-            dgvTecnicos.DataSource = repo.ObtenerTodos().ToList();
-            if (dgvTecnicos.Columns["Id"] != null)
-                dgvTecnicos.Columns["Id"].Visible = false;
-            if (dgvTecnicos.Columns["IdUsuario"] != null)
-                dgvTecnicos.Columns["IdUsuario"].Visible = false;
+            List<Usuario> usuarios = new UsuarioRepositorio().ObtenerTodos().ToList();
+
+            dgvTecnicos.DataSource = (from t in repo.ObtenerTodos()
+                                      join u in usuarios on t.IdUsuario equals u.Id into gu
+                                      from u in gu.DefaultIfEmpty()
+                                      orderby t.Id descending
+                                      select new
+                                      {
+                                          Id = t.Id,
+                                          Nombre = t.Nombre,
+                                          Telefono = t.Telefono,
+                                          Usuario = u == null ? "Sin usuario" : u.NombreUser
+                                      }).ToList();
+
+            dgvTecnicos.Columns["Id"].Visible = false;
+            dgvTecnicos.Columns["Nombre"].HeaderText = "Nombre";
+            dgvTecnicos.Columns["Telefono"].HeaderText = "Telefono";
+            dgvTecnicos.Columns["Usuario"].HeaderText = "Usuario de acceso";
+            dgvTecnicos.ReadOnly = true;
+            dgvTecnicos.AllowUserToAddRows = false;
+            dgvTecnicos.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dgvTecnicos.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
         }
 
         private void Limpiar()
@@ -51,6 +86,8 @@ namespace TecnoFix.Formularios
             tecnicoActual = null;
             txtNombre.Clear();
             txtTelefono.Clear();
+            CargarUsuarios();
+            btnGuardar.Text = "Guardar";
             txtNombre.Focus();
         }
 
@@ -74,15 +111,21 @@ namespace TecnoFix.Formularios
             }
         }
 
-        // Pasar el tecnico de la grilla a los campos
+        // La grilla ya no tiene objetos Tecnico, se busca el tecnico por su Id
         private void dgvTecnicos_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex < 0) return;
 
-            Tecnico fila = (Tecnico)dgvTecnicos.Rows[e.RowIndex].DataBoundItem;
-            tecnicoActual = fila.Copiar();
+            int id = (int)dgvTecnicos.Rows[e.RowIndex].Cells["Id"].Value;
+            Tecnico encontrado = repo.ObtenerPorId(id);
+            if (encontrado == null) return;
+
+            tecnicoActual = encontrado.Copiar();
+            CargarUsuarios();   // incluye el usuario que ya tiene este tecnico
             txtNombre.Text = tecnicoActual.Nombre;
             txtTelefono.Text = tecnicoActual.Telefono;
+            cboUsuario.SelectedValue = tecnicoActual.IdUsuario ?? 0;
+            btnGuardar.Text = "Actualizar";
         }
 
         private void btnGuardar_Click(object sender, EventArgs e)
@@ -108,6 +151,10 @@ namespace TecnoFix.Formularios
             // Si no hay telefono se guarda NULL en la base de datos
             string telefonoGuardar = telefono == "" ? null : telefono;
 
+            // Usuario elegido en el combo (0 = sin usuario = NULL)
+            int idUsuario = cboUsuario.SelectedValue == null ? 0 : (int)cboUsuario.SelectedValue;
+            int? idUsuarioGuardar = idUsuario == 0 ? (int?)null : idUsuario;
+
             try
             {
                 if (tecnicoActual == null)
@@ -115,6 +162,7 @@ namespace TecnoFix.Formularios
                     Tecnico nuevo = new Tecnico();
                     nuevo.Nombre = nombre;
                     nuevo.Telefono = telefonoGuardar;
+                    nuevo.IdUsuario = idUsuarioGuardar;
                     repo.Insertar(nuevo);
                     MessageBox.Show("Tecnico guardado", "Informacion", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
@@ -122,6 +170,7 @@ namespace TecnoFix.Formularios
                 {
                     tecnicoActual.Nombre = nombre;
                     tecnicoActual.Telefono = telefonoGuardar;
+                    tecnicoActual.IdUsuario = idUsuarioGuardar;
                     repo.Actualizar(tecnicoActual);
                     MessageBox.Show("Tecnico actualizado", "Informacion", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }

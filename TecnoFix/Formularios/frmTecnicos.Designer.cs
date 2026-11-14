@@ -19,8 +19,10 @@
         {
             this.lblNombre = new System.Windows.Forms.Label();
             this.lblTelefono = new System.Windows.Forms.Label();
+            this.lblUsuario = new System.Windows.Forms.Label();
             this.txtNombre = new System.Windows.Forms.TextBox();
             this.txtTelefono = new System.Windows.Forms.TextBox();
+            this.cboUsuario = new System.Windows.Forms.ComboBox();
             this.btnGuardar = new System.Windows.Forms.Button();
             this.btnNuevo = new System.Windows.Forms.Button();
             this.btnEliminar = new System.Windows.Forms.Button();
@@ -48,30 +50,49 @@
             this.lblTelefono.TabIndex = 1;
             this.lblTelefono.Text = "Telefono";
             // 
+            // lblUsuario
+            // 
+            this.lblUsuario.AutoSize = true;
+            this.lblUsuario.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblUsuario.Location = new System.Drawing.Point(13, 134);
+            this.lblUsuario.Name = "lblUsuario";
+            this.lblUsuario.Size = new System.Drawing.Size(61, 16);
+            this.lblUsuario.TabIndex = 2;
+            this.lblUsuario.Text = "Usuario";
+            // 
             // txtNombre
             // 
             this.txtNombre.Location = new System.Drawing.Point(109, 23);
             this.txtNombre.MaxLength = 100;
             this.txtNombre.Name = "txtNombre";
-            this.txtNombre.Size = new System.Drawing.Size(176, 22);
-            this.txtNombre.TabIndex = 2;
+            this.txtNombre.Size = new System.Drawing.Size(150, 22);
+            this.txtNombre.TabIndex = 3;
             // 
             // txtTelefono
             // 
             this.txtTelefono.Location = new System.Drawing.Point(109, 76);
             this.txtTelefono.MaxLength = 8;
             this.txtTelefono.Name = "txtTelefono";
-            this.txtTelefono.Size = new System.Drawing.Size(176, 22);
-            this.txtTelefono.TabIndex = 3;
+            this.txtTelefono.Size = new System.Drawing.Size(150, 22);
+            this.txtTelefono.TabIndex = 4;
+            // 
+            // cboUsuario
+            // 
+            this.cboUsuario.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboUsuario.FormattingEnabled = true;
+            this.cboUsuario.Location = new System.Drawing.Point(102, 127);
+            this.cboUsuario.Name = "cboUsuario";
+            this.cboUsuario.Size = new System.Drawing.Size(157, 24);
+            this.cboUsuario.TabIndex = 5;
             // 
             // btnGuardar
             // 
             this.btnGuardar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
             this.btnGuardar.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnGuardar.Location = new System.Drawing.Point(13, 130);
+            this.btnGuardar.Location = new System.Drawing.Point(13, 190);
             this.btnGuardar.Name = "btnGuardar";
-            this.btnGuardar.Size = new System.Drawing.Size(75, 29);
-            this.btnGuardar.TabIndex = 4;
+            this.btnGuardar.Size = new System.Drawing.Size(98, 31);
+            this.btnGuardar.TabIndex = 6;
             this.btnGuardar.Text = "Guardar";
             this.btnGuardar.UseVisualStyleBackColor = false;
             // 
@@ -79,10 +100,10 @@
             // 
             this.btnNuevo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
             this.btnNuevo.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnNuevo.Location = new System.Drawing.Point(102, 130);
+            this.btnNuevo.Location = new System.Drawing.Point(117, 190);
             this.btnNuevo.Name = "btnNuevo";
-            this.btnNuevo.Size = new System.Drawing.Size(75, 29);
-            this.btnNuevo.TabIndex = 5;
+            this.btnNuevo.Size = new System.Drawing.Size(85, 31);
+            this.btnNuevo.TabIndex = 7;
             this.btnNuevo.Text = "Nuevo";
             this.btnNuevo.UseVisualStyleBackColor = false;
             // 
@@ -90,10 +111,10 @@
             // 
             this.btnEliminar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
             this.btnEliminar.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnEliminar.Location = new System.Drawing.Point(183, 130);
+            this.btnEliminar.Location = new System.Drawing.Point(208, 190);
             this.btnEliminar.Name = "btnEliminar";
-            this.btnEliminar.Size = new System.Drawing.Size(75, 29);
-            this.btnEliminar.TabIndex = 6;
+            this.btnEliminar.Size = new System.Drawing.Size(79, 31);
+            this.btnEliminar.TabIndex = 8;
             this.btnEliminar.Text = "Eliminar";
             this.btnEliminar.UseVisualStyleBackColor = false;
             // 
@@ -101,28 +122,33 @@
             // 
             this.dgvTecnicos.AllowUserToAddRows = false;
             this.dgvTecnicos.AllowUserToDeleteRows = false;
+            this.dgvTecnicos.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.dgvTecnicos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvTecnicos.Location = new System.Drawing.Point(346, 23);
+            this.dgvTecnicos.Location = new System.Drawing.Point(293, 12);
             this.dgvTecnicos.Name = "dgvTecnicos";
             this.dgvTecnicos.ReadOnly = true;
             this.dgvTecnicos.RowHeadersWidth = 51;
             this.dgvTecnicos.RowTemplate.Height = 24;
             this.dgvTecnicos.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvTecnicos.Size = new System.Drawing.Size(683, 367);
-            this.dgvTecnicos.TabIndex = 7;
+            this.dgvTecnicos.Size = new System.Drawing.Size(431, 367);
+            this.dgvTecnicos.TabIndex = 9;
             // 
             // frmTecnicos
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-            this.ClientSize = new System.Drawing.Size(1052, 450);
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.dgvTecnicos);
             this.Controls.Add(this.btnEliminar);
             this.Controls.Add(this.btnNuevo);
             this.Controls.Add(this.btnGuardar);
+            this.Controls.Add(this.cboUsuario);
             this.Controls.Add(this.txtTelefono);
             this.Controls.Add(this.txtNombre);
+            this.Controls.Add(this.lblUsuario);
             this.Controls.Add(this.lblTelefono);
             this.Controls.Add(this.lblNombre);
             this.Name = "frmTecnicos";
@@ -137,8 +163,10 @@
 
         private System.Windows.Forms.Label lblNombre;
         private System.Windows.Forms.Label lblTelefono;
+        private System.Windows.Forms.Label lblUsuario;
         private System.Windows.Forms.TextBox txtNombre;
         private System.Windows.Forms.TextBox txtTelefono;
+        private System.Windows.Forms.ComboBox cboUsuario;
         private System.Windows.Forms.Button btnGuardar;
         private System.Windows.Forms.Button btnNuevo;
         private System.Windows.Forms.Button btnEliminar;
