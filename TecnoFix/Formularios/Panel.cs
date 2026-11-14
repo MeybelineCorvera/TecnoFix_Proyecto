@@ -70,7 +70,7 @@ namespace TecnoFix.Formularios
 
         private void tecnicosToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            EnDesarrollo("Tecnicos");
+            AbrirFormulario(new frmTecnicos());
         }
 
         private void usuariosToolStripMenuItem_Click(object sender, EventArgs e)
